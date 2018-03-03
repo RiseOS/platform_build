@@ -1202,6 +1202,9 @@ endef
 
 # $(1): output file
 define build-recoveryimage-target
+  # Generate changelog
+  @echo "Generating changelog"
+  $(hide) ./vendor/riseos/tools/changelog.sh
   @echo ----- Making recovery image ------
   $(hide) mkdir -p $(TARGET_RECOVERY_OUT)
   $(hide) mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/etc $(TARGET_RECOVERY_ROOT_OUT)/sdcard $(TARGET_RECOVERY_ROOT_OUT)/tmp
