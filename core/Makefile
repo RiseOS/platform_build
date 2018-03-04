@@ -5,13 +5,7 @@
 LOCAL_PATH := $(BUILD_SYSTEM)
 
 # Pick a reasonable string to use to identify files.
-ifneq (,$(filter eng.%,$(BUILD_NUMBER)))
-  # BUILD_NUMBER has a timestamp in it, which means that
-  # it will change every time.  Pick a stable value.
-  FILE_NAME_TAG := eng.$(USER)
-else
-  FILE_NAME_TAG := $(BUILD_NUMBER)
-endif
+FILE_NAME_TAG := build-$(BUILD_ID)-$(shell date -u +%Y%m%d)
 
 # -----------------------------------------------------------------
 # Define rules to copy PRODUCT_COPY_FILES defined by the product.
@@ -444,7 +438,7 @@ $(hide) echo '' >> $5
 
 endef
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
@@ -2198,7 +2192,7 @@ endif # build_ota_package
 # This zip can be used to create an OTA package or filesystem image
 # as a post-build step.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
@@ -2599,7 +2593,7 @@ ifeq ($(build_ota_package),true)
 # -----------------------------------------------------------------
 # OTA update package
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
@@ -2635,7 +2629,7 @@ endif    # build_ota_package
 # -----------------------------------------------------------------
 # The update package
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
@@ -2655,7 +2649,7 @@ updatepackage: $(INTERNAL_UPDATE_PACKAGE_TARGET)
 # A zip of the symbols directory.  Keep the full paths to make it
 # more obvious where these files came from.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
@@ -2680,7 +2674,7 @@ $(SYMBOLS_ZIP): $(SOONG_ZIP)
 # -----------------------------------------------------------------
 # A zip of the coverage directory.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
 name := $(name)_debug
 endif
@@ -2704,7 +2698,7 @@ $(COVERAGE_ZIP): $(SOONG_ZIP)
 # A zip of the Android Apps. Not keeping full path so that we don't
 # include product names when distributing
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
