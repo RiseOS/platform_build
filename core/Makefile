@@ -2735,10 +2735,10 @@ ifdef BOARD_BPT_DISK_SIZE
 	$(hide) echo "board_bpt_disk_size=$(BOARD_BPT_DISK_SIZE)" >> $(zip_root)/META/misc_info.txt
 endif
 	$(call generate-userimage-prop-dictionary, $(zip_root)/META/misc_info.txt)
-ifneq ($(INSTALLED_RECOVERYIMAGE_TARGET),)
-	$(hide) PATH=$(foreach p,$(INTERNAL_USERIMAGES_BINARY_PATHS),$(p):)$$PATH MKBOOTIMG=$(MKBOOTIMG) \
-	    build/make/tools/releasetools/make_recovery_patch $(zip_root) $(zip_root)
-endif
+#ifneq ($(INSTALLED_RECOVERYIMAGE_TARGET),)
+#	$(hide) PATH=$(foreach p,$(INTERNAL_USERIMAGES_BINARY_PATHS),$(p):)$$PATH MKBOOTIMG=$(MKBOOTIMG) \
+#	    build/make/tools/releasetools/make_recovery_patch $(zip_root) $(zip_root)
+#endif
 ifeq ($(AB_OTA_UPDATER),true)
 	@# When using the A/B updater, include the updater config files in the zip.
 	$(hide) cp $(TOPDIR)system/update_engine/update_engine.conf $(zip_root)/META/update_engine_config.txt
