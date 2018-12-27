@@ -522,11 +522,11 @@ $(hide) echo '' >> $5
 
 endef
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-apkcerts-$(FILE_NAME_TAG)
+name := $(name)-apkcerts
 intermediates := \
 	$(call intermediates-dir-for,PACKAGING,apkcerts)
 APKCERTS_FILE := $(intermediates)/$(name).txt
@@ -2445,11 +2445,11 @@ endif # build_ota_package
 # This zip can be used to create an OTA package or filesystem image
 # as a post-build step.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-target_files-$(FILE_NAME_TAG)
+name := $(name)-target_files
 
 intermediates := $(call intermediates-dir-for,PACKAGING,target_files)
 BUILT_TARGET_FILES_PACKAGE := $(intermediates)/$(name).zip
@@ -2875,11 +2875,11 @@ ifeq ($(build_ota_package),true)
 # -----------------------------------------------------------------
 # OTA update package
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-ota-$(FILE_NAME_TAG)
+name := $(name)-ota
 
 INTERNAL_OTA_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 
@@ -2911,11 +2911,11 @@ endif    # build_ota_package
 # -----------------------------------------------------------------
 # The update package
 
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-img-$(FILE_NAME_TAG)
+name := $(name)-img
 
 INTERNAL_UPDATE_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 
@@ -2931,11 +2931,11 @@ updatepackage: $(INTERNAL_UPDATE_PACKAGE_TARGET)
 # A zip of the symbols directory.  Keep the full paths to make it
 # more obvious where these files came from.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-symbols-$(FILE_NAME_TAG)
+name := $(name)-symbols
 
 SYMBOLS_ZIP := $(PRODUCT_OUT)/$(name).zip
 # For apps_only build we'll establish the dependency later in build/make/core/main.mk.
@@ -2957,11 +2957,11 @@ $(SYMBOLS_ZIP): $(SOONG_ZIP)
 # -----------------------------------------------------------------
 # A zip of the coverage directory.
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
 name := $(name)_debug
 endif
-name := $(name)-coverage-$(FILE_NAME_TAG)
+name := $(name)-coverage
 COVERAGE_ZIP := $(PRODUCT_OUT)/$(name).zip
 ifndef TARGET_BUILD_APPS
 $(COVERAGE_ZIP): $(INSTALLED_SYSTEMIMAGE) \
@@ -2982,11 +2982,11 @@ $(COVERAGE_ZIP): $(SOONG_ZIP)
 # A zip of the Android Apps. Not keeping full path so that we don't
 # include product names when distributing
 #
-name := $(TARGET_PRODUCT)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-apps-$(FILE_NAME_TAG)
+name := $(name)-apps
 
 APPS_ZIP := $(PRODUCT_OUT)/$(name).zip
 $(APPS_ZIP): $(INSTALLED_SYSTEMIMAGE)
@@ -3027,7 +3027,7 @@ endif # EMMA_INSTRUMENT=true
 # Only for apps_only build.
 #
 ifdef TARGET_BUILD_APPS
-PROGUARD_DICT_ZIP := $(PRODUCT_OUT)/$(TARGET_PRODUCT)-proguard-dict-$(FILE_NAME_TAG).zip
+PROGUARD_DICT_ZIP := $(PRODUCT_OUT)/$(TARGET_PRODUCT)-proguard-dict.zip
 # the dependency will be set up later in build/make/core/main.mk.
 $(PROGUARD_DICT_ZIP) :
 	@echo "Packaging Proguard obfuscation dictionary files."
@@ -3088,7 +3088,7 @@ INTERNAL_EMULATOR_PACKAGE_FILES += \
 		$(INSTALLED_SYSTEMIMAGE) \
 		$(INSTALLED_USERDATAIMAGE_TARGET)
 
-name := $(TARGET_PRODUCT)-emulator-$(FILE_NAME_TAG)
+name := $(VENDOR)-$(ROM_VERSION)-$(BUILD_ID)-$(TARGET_DEVICE)-emulator
 
 INTERNAL_EMULATOR_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 
@@ -3118,7 +3118,7 @@ sdk_dir := $(HOST_OUT)/sdk/$(TARGET_PRODUCT)
 #     darwin-x86  --> android-sdk_12345_mac-x86
 #     windows-x86 --> android-sdk_12345_windows
 #
-sdk_name := android-sdk_$(FILE_NAME_TAG)
+sdk_name := android-sdk
 ifeq ($(HOST_OS),darwin)
   INTERNAL_SDK_HOST_OS_NAME := mac
 else
